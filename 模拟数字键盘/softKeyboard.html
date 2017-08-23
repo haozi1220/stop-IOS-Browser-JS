@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>模拟数字键盘</title>
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<link href="css/softKeyBoard.css" rel="stylesheet">
+		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	</head>
+	<body>
+	    <div class="wrapper">
+	    	<div class="inputWrapper">
+	    		<input type="tel" name="numberTotal" size="3" placeholder="请输入数量" />
+	    	</div>
+	    	<div class="numWrapper">
+	    		<div class="closeSoft">关闭</div>
+	    		<ul class="numList">
+	    			<li class="number">1</li>
+	    			<li class="number">2</li>
+	    			<li class="number">3</li>
+	    		</ul>
+	    		<ul class="numList">
+	    			<li class="number">4</li>
+	    			<li class="number">5</li>
+	    			<li class="number">6</li>
+	    		</ul>
+	    		<ul class="numList">
+	    			<li class="number">7</li>
+	    			<li class="number">8</li>
+	    			<li class="number">9</li>
+	    		</ul>
+	    		<ul class="numList">
+	    			<li class="clearVal">空</li>
+	    			<li class="number">0</li>
+	    			<li class="deletNum">清除</li>
+	    		</ul>
+	    	</div>
+	    </div>
+	</body>
+</html>
+<script type="text/javascript">
+	//获取各元素
+	var inputTag = $('input[type="tel"]');//获取输入框
+	var closeBtn = $('.closeSoft');		  //获取关闭按钮
+	var strNum = null;
+	$('.numWrapper').hide();
+	//添加事件
+	$('input[type="tel"]').focus(function(event) {//输入框获取焦点时键盘展开
+		$('.numWrapper').show()
+	});
+	$('.closeSoft').on('click',function(){//点击关闭按钮键盘收起
+		$('.numWrapper').hide();
+	});
+	//点击document时收起软键盘
+	$(document).on('mousedown',function(event){
+		if(event.target.nodeName == 'LI' || event.target.nodeName == 'INPUT'){	
+			$('.numWrapper').show();
+		}else{
+			$('.numWrapper').hide();
+		}
+	})
+	//点击输入数字键盘
+	$('.number').on('click',function(){
+		if( inputTag.val().length > 2 ) return;
+		inputTag.val(inputTag.val() + $(this).html());
+		strNum = inputTag.val();
+	});
+	//点击删除键
+	$('.deletNum').on('click',function(){
+		if( inputTag.val() ){
+			strNum = strNum.substring(-1,strNum.length-1);
+			inputTag.val(strNum);	
+		}
+	});
+	//点击清空
+	$('.clearVal').on('click',function(){
+		inputTag.val('');
+	})
+</script>
